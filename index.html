@@ -197,6 +197,12 @@ textarea{width:100%;min-height:80px;resize:vertical}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* ===================== v3 layer ===================== */
+.alt-note{display:flex;flex-direction:column;gap:2px;border:2px dashed var(--t2);border-radius:14px;padding:10px 16px;background:var(--surface)}
+.alt-note b{color:var(--t2);font-size:.95rem}
+.tagp.alt{color:var(--surface);background:var(--t2);border-color:var(--t2);font-weight:700}
+.navbtn.st.alt .dotc{border-style:dashed;border-color:var(--t2)}
+.navbtn.st.alt.done .dotc{border-style:solid}
+
 .exam-note{background:var(--hookbg);color:#eef1fb;border-radius:12px;padding:10px 16px;font-weight:600;border-inline-start:6px solid var(--t4)}
 .exam-note b{color:#ffd23f}
 main{min-width:0;max-width:820px;margin:0 auto}
@@ -1125,6 +1131,198 @@ function HERO(cv) {
   const L = loop(ts => { t = ts; draw(); });
   return { start() { init(); if (RM) draw(); else L.start(); }, stop() { L.stop(); } };
 }
+/* ================= Station 8: chemical equilibrium (alternative assessment) ================= */
+const ALT_NOTE = `<div class="alt-note" role="note"><b>הערכה חלופית</b><span>התחנה הזו היא חלק מההערכה החלופית בנושא "שיווי משקל ואנטרופיה". מה שתלמדו כאן ישמש אתכם בעבודה.</span></div>`;
+const EQ_CH = {
+id:'equilibrium', alt:true, title:'שיווי משקל כימי', short:'Kc, מנת ריכוזים ועקרון לה שטלייה',
+html:`
+${ALT_NOTE}
+<div class="hook"><b>שאלת פתיחה</b><p>בכלי סגור מערבבים גז מימן חסר צבע ואדי ברום בצבע אדום-חום. הצבע מתחיל לדהות... ואז נעצר. הוא לא נעלם לגמרי, ולא משתנה יותר. האם התגובה נעצרה?</p></div>
+<section class="blk"><h2>תגובות הפיכות</h2>
+<p>תגובות רבות אינן מתרחשות עד תום. בכלי סגור, התוצרים יכולים להגיב זה עם זה וליצור שוב את המגיבים. תגובה כזו נקראת <b>תגובה הפיכה</b>, ומסמנים אותה בחץ כפול:</p>
+<div class="eq">H<sub>2</sub>(g) + Br<sub>2</sub>(g) ⇌ 2HBr(g)</div>
+<ul><li><b>התגובה הישירה</b>: משמאל לימין, מהמגיבים לתוצרים.</li>
+<li><b>התגובה ההפוכה</b>: מימין לשמאל, מהתוצרים בחזרה למגיבים.</li></ul>
+</section>
+<section class="blk"><h2>שיווי משקל דינמי</h2>
+<p>בתחילת התגובה יש הרבה מגיבים, ולכן קצב התגובה הישירה גבוה. ככל שנוצרים תוצרים, קצב התגובה ההפוכה עולה. בשלב מסוים שני הקצבים <b>משתווים</b>, וזהו מצב של <b>שיווי משקל</b>.</p>
+<div class="split">
+<div class="cardlet"><h4>ברמה המאקרוסקופית</h4><p>נראה כאילו "שום דבר לא קורה": הצבע, הלחץ, הטמפרטורה והריכוזים נשארים קבועים לאורך זמן.</p></div>
+<div class="cardlet"><h4>ברמה המיקרוסקופית</h4><p>שתי התגובות ממשיכות להתרחש כל הזמן, <b>באותו קצב</b>. בכל שנייה נוצרות מולקולות HBr ובאותה שנייה מתפרק מספר שווה שלהן.</p></div>
+</div>
+<div class="key"><h3>שיווי משקל הוא דינמי</h3><p>במצב שיווי משקל התגובה לא נעצרה. הריכוזים קבועים, אבל <b>לא בהכרח שווים</b>, כי שתי התגובות מתרחשות באותו קצב.</p></div>
+<div class="warn"><h3>בתוכנית הלימודים</h3><p>עוסקים רק במערכות <b>הומוגניות</b>: כל המרכיבים באותו מצב צבירה (למשל, כולם גזים). שיווי משקל דורש <b>כלי סגור</b>, אחרת חומר יוצא מהמערכת.</p></div>
+</section>
+<div class="widget" data-w="equil"></div>
+<section class="blk"><h2>מולי גז ולחץ</h2>
+<p>בכלי סגור בטמפרטורה קבועה, הלחץ תלוי במספר מולי הגז. אם בתגובה משתנה מספר מולי הגז, הלחץ בכלי משתנה עד שמגיעים לשיווי משקל, ואז נשאר קבוע.</p>
+<ul><li><span class="f">N₂(g) + 3H₂(g) ⇌ 2NH₃(g)</span>: מ-4 מולי גז ל-2. כשהתגובה הישירה מתקדמת, הלחץ יורד.</li>
+<li><span class="f">H₂(g) + Br₂(g) ⇌ 2HBr(g)</span>: 2 מולי גז בכל צד. הלחץ לא משתנה במהלך התגובה.</li></ul>
+</section>
+<section class="blk"><h2>קבוע שיווי המשקל K<sub>c</sub></h2>
+<p>במצב שיווי משקל, היחס בין ריכוזי התוצרים לריכוזי המגיבים הוא מספר קבוע. לתגובה כללית:</p>
+<div class="eq">aA + bB ⇌ cC + dD &nbsp;&nbsp;⇒&nbsp;&nbsp; Kc = [C]<sup>c</sup>·[D]<sup>d</sup> / ([A]<sup>a</sup>·[B]<sup>b</sup>)</div>
+<ul><li>במונה: ריכוזי התוצרים, כל אחד בחזקת המקדם שלו בניסוח. במכנה: המגיבים.</li>
+<li>הריכוזים הם ריכוזים <b>במצב שיווי משקל</b>, ב-M. נהוג לרשום את K<sub>c</sub> ללא יחידות.</li>
+<li>K<sub>c</sub> תלוי <b>רק בטמפרטורה</b>. שינוי בריכוזים ההתחלתיים לא משנה אותו.</li></ul>
+<div class="tblwrap"><table><thead><tr><th>ערך K<sub>c</sub></th><th>משמעות</th></tr></thead><tbody>
+<tr><td class="num">K &gt; 10¹⁰</td><td>כמעט רק תוצרים. מעשית, התגובה מתרחשת עד תום.</td></tr>
+<tr><td class="num">K &gt; 1</td><td>במצב שיווי משקל יש יותר תוצרים ממגיבים.</td></tr>
+<tr><td class="num">0.01 &lt; K &lt; 100</td><td>מגיבים ותוצרים בכמויות מורגשות: שיווי משקל "ברור".</td></tr>
+<tr><td class="num">K &lt; 1</td><td>יש יותר מגיבים מתוצרים.</td></tr>
+<tr><td class="num">K &lt; 10⁻¹⁰</td><td>כמעט רק מגיבים. מעשית, התגובה כמעט לא מתרחשת.</td></tr>
+</tbody></table></div>
+</section>
+<section class="blk"><h2>דוגמה פתורה: טבלת ריכוזים</h2>
+<p>לכלי סגור שנפחו 1 ליטר הכניסו 1 מול מכל אחד מהחומרים H<sub>2</sub>, Br<sub>2</sub> ו-HBr. במצב שיווי משקל נמצאו בכלי 1.8 מול HBr. מהו K<sub>c</sub>?</p>
+<div class="tblwrap"><table><thead><tr><th></th><th class="num">H₂</th><th class="num">Br₂</th><th class="num">HBr</th></tr></thead><tbody>
+<tr><td>ריכוז התחלתי (M)</td><td class="num">1</td><td class="num">1</td><td class="num">1</td></tr>
+<tr><td>שינוי לפי יחס המולים (M)</td><td class="num">−0.4</td><td class="num">−0.4</td><td class="num">+0.8</td></tr>
+<tr><td>ריכוז בשיווי משקל (M)</td><td class="num">0.6</td><td class="num">0.6</td><td class="num">1.8</td></tr>
+</tbody></table></div>
+<div class="eq">Kc = [HBr]² / ([H₂]·[Br₂]) = 1.8² / (0.6 × 0.6) = 3.24 / 0.36 = 9</div>
+</section>
+<section class="blk"><h2>מנת הריכוזים Q</h2>
+<p><b>מנת הריכוזים Q</b> מחושבת בדיוק כמו K<sub>c</sub>, אבל עם הריכוזים <b>ברגע כלשהו</b>, גם כשהמערכת עוד לא בשיווי משקל. ההשוואה בין Q ל-K<sub>c</sub> מנבאת לאן תתקדם התגובה:</p>
+<div class="split">
+<div class="cardlet"><h4>Q &lt; Kc</h4><p>יש "מעט מדי" תוצרים. התגובה <b>הישירה</b> תגבר עד ש-Q יגדל ל-K<sub>c</sub>.</p></div>
+<div class="cardlet"><h4>Q = Kc</h4><p>המערכת <b>בשיווי משקל</b>.</p></div>
+<div class="cardlet"><h4>Q &gt; Kc</h4><p>יש "יותר מדי" תוצרים. התגובה <b>ההפוכה</b> תגבר עד ש-Q יקטן ל-K<sub>c</sub>.</p></div>
+</div>
+</section>
+<div class="widget" data-w="kcalc"></div>
+<section class="blk"><h2>שינוי תנאים: עקרון לה שטלייה</h2>
+<div class="key"><h3>עקרון לה שטלייה (1889)</h3><p>כאשר מפריעים למערכת שנמצאת בשיווי משקל, תגבר התגובה שמקטינה את ההפרעה, עד להשגת שיווי משקל חדש.</p></div>
+<div class="tblwrap"><table><thead><tr><th>שינוי</th><th>מה קורה</th><th>K<sub>c</sub></th></tr></thead><tbody>
+<tr><td><b>הוספת מגיב</b> או הוצאת תוצר</td><td>Q קטן מ-K<sub>c</sub>, ו<b>התגובה הישירה</b> גוברת עד שיווי משקל חדש</td><td>לא משתנה</td></tr>
+<tr><td><b>הוספת תוצר</b> או הוצאת מגיב</td><td>Q גדול מ-K<sub>c</sub>, ו<b>התגובה ההפוכה</b> גוברת</td><td>לא משתנה</td></tr>
+<tr><td><b>חימום</b></td><td>גוברת התגובה ה<b>אנדותרמית</b>, שקולטת את האנרגיה שנוספה</td><td>משתנה. גדל אם התגובה הישירה אנדותרמית, קטן אם היא אקסותרמית</td></tr>
+<tr><td><b>קירור</b></td><td>גוברת התגובה ה<b>אקסותרמית</b></td><td>משתנה בכיוון ההפוך לחימום</td></tr>
+<tr><td><b>זרז בתחילת התגובה</b></td><td>שיווי המשקל מושג <b>מהר יותר</b></td><td>לא משתנה</td></tr>
+<tr><td><b>זרז במצב שיווי משקל</b></td><td>שני הקצבים עולים באותה מידה. <b>הרכב המערכת לא משתנה</b></td><td>לא משתנה</td></tr>
+</tbody></table></div>
+<p>אפשר להסביר שינוי בריכוז בשלוש דרכים: <b>מודל ההתנגשויות</b> (יותר חלקיקי מגיב, יותר התנגשויות, קצב ישיר גבוה יותר), <b>השוואת Q ל-K<sub>c</sub></b>, או <b>עקרון לה שטלייה</b>.</p>
+<p><b>דוגמה מהתעשייה:</b> בתהליך הָבֶּר לייצור אמוניה, <span class="f">N₂(g) + 3H₂(g) ⇌ 2NH₃(g)   ΔH &lt; 0</span>. התגובה הישירה אקסותרמית, ולכן חימום מקטין את K<sub>c</sub>. ובכל זאת עובדים בטמפרטורה גבוהה יחסית ועם זרז, כדי שהתגובה תהיה מהירה מספיק. זו פשרה בין שיווי משקל לקצב.</p>
+</section>
+<section class="blk"><h3>סרטונים להעמקה</h3>${vid([['שיווי משקל כימי דינמי','שיווי משקל כימי דינמי כימיה'],['עקרון לה שטלייה','עקרון לה שטלייה שיווי משקל'],['Dynamic equilibrium','dynamic equilibrium chemistry animation']])}</section>
+`,
+quiz:[
+{q:'מהו מצב של שיווי משקל כימי דינמי?',o:['התגובה נעצרה לגמרי','התגובה הישירה וההפוכה מתרחשות באותו קצב, והריכוזים נשארים קבועים','ריכוזי המגיבים והתוצרים שווים','כל המגיבים הפכו לתוצרים'],a:1,e:'שתי התגובות ממשיכות, באותו קצב. לכן הריכוזים קבועים, אבל לא בהכרח שווים.'},
+{q:'איך אפשר לדעת ברמה המאקרוסקופית שמערכת הגיעה לשיווי משקל?',o:['רואים מולקולות מתפרקות','תכונות נמדדות, כמו צבע ולחץ, נשארות קבועות לאורך זמן','הכלי מתחמם','נוצר משקע'],a:1,e:'במצב שיווי משקל הריכוזים קבועים, ולכן גם הצבע, הלחץ וה-pH קבועים.'},
+{q:'מהו הביטוי של Kc לתגובה N₂(g) + 3H₂(g) ⇌ 2NH₃(g)?',o:['[NH₃] / ([N₂][H₂])','[NH₃]² / ([N₂][H₂]³)','[N₂][H₂]³ / [NH₃]²','2[NH₃] / (3[H₂][N₂])'],a:1,e:'תוצרים במונה ומגיבים במכנה, כל ריכוז בחזקת המקדם שלו בניסוח.'},
+{q:'בכלי של 1 ליטר הוכנסו 1 מול H₂, 1 מול Br₂ ו-1 מול HBr. בשיווי משקל נמצאו 1.8 מול HBr. מהו Kc?',o:['1.8','3','9','0.11'],a:2,e:'HBr עלה ב-0.8, ולכן H₂ ו-Br₂ ירדו כל אחד ב-0.4 ל-0.6. Kc = 1.8² ÷ (0.6 × 0.6) = 9.'},
+{q:'לתגובה מסוימת Kc = 10¹². מה אפשר להסיק?',o:['במצב שיווי משקל יש בעיקר מגיבים','במצב שיווי משקל יש כמעט רק תוצרים; מעשית התגובה מתרחשת עד תום','התגובה מהירה מאוד','התגובה אנדותרמית'],a:1,e:'Kc גדול מאוד = המונה (התוצרים) גדול בהרבה מהמכנה (המגיבים). Kc לא אומר דבר על הקצב.'},
+{q:'במערכת כלשהי מחשבים ומקבלים Q < Kc. מה יקרה?',o:['המערכת בשיווי משקל','התגובה ההפוכה תגבר','התגובה הישירה תגבר עד ש-Q ישתווה ל-Kc','Kc יקטן עד ש-Q ישתווה לו'],a:2,e:'יש פחות תוצרים מאשר בשיווי משקל, ולכן התגובה הישירה תגבר. Kc עצמו לא משתנה בטמפרטורה קבועה.'},
+{q:'מוסיפים מגיב למערכת בשיווי משקל, בטמפרטורה קבועה. מה נכון?',o:['Kc גדל','Kc קטן','התגובה הישירה גוברת זמנית, ובשיווי המשקל החדש Kc זהה','לא קורה כלום'],a:2,e:'Q קטן מ-Kc, התגובה הישירה גוברת עד ש-Q שוב שווה ל-Kc. Kc תלוי רק בטמפרטורה.'},
+{q:'בתגובה N₂(g) + 3H₂(g) ⇌ 2NH₃(g) הישירה אקסותרמית. מחממים את המערכת בשיווי משקל. מה קורה?',o:['התגובה הישירה גוברת ו-Kc גדל','התגובה ההפוכה (האנדותרמית) גוברת ו-Kc קטן','שום דבר, כי Kc קבוע','Kc גדל ותוצרים נוספים נוצרים'],a:1,e:'לפי לה שטלייה, חימום מגביר את התגובה האנדותרמית, כאן ההפוכה. פחות תוצרים בשיווי משקל, ולכן Kc קטן.'},
+{q:'מוסיפים זרז למערכת שכבר נמצאת בשיווי משקל. מה קורה?',o:['שיווי המשקל נוטה לתוצרים','שני הקצבים עולים באותה מידה, והרכב המערכת לא משתנה','Kc גדל','שיווי המשקל נוטה למגיבים'],a:1,e:'זרז מוריד את אנרגיית השפעול לשני הכיוונים. בתחילת תגובה הוא רק מקצר את הזמן להגעה לשיווי משקל.'},
+{q:'בכלי סגור מכניסים NO₂ בלבד, ומתרחשת התגובה 2NO₂(g) ⇌ N₂O₄(g). מה קורה ללחץ בכלי עד שיווי המשקל?',o:['עולה','יורד, כי מספר מולי הגז קטן','לא משתנה','עולה ואז יורד מתחת להתחלה'],a:1,e:'כל 2 מולי גז הופכים למול אחד. פחות מולי גז בכלי סגור = לחץ נמוך יותר. בשיווי משקל הלחץ נשאר קבוע.'}
+]};
+CHAPTERS.splice(CHAPTERS.findIndex(c => c.id === 'entropy'), 0, EQ_CH);
+(function () { const en = CHAPTERS.find(c => c.id === 'entropy'); en.alt = true; en.html = ALT_NOTE + en.html; })();
+
+/* ================= widget: equilibrium particle simulation ================= */
+W.equil = box => {
+  head(box, 'הדמיה', 'A ⇌ B: לראות שיווי משקל קורה', true);
+  const wrap = el('div', { class: 'split' }); wrap.style.gridTemplateColumns = 'minmax(0,1fr) minmax(0,1.6fr)';
+  const c1 = el('div', { style: 'min-width:0' }), c2 = el('div', { style: 'min-width:0' }); const pv = el('canvas'), gv = el('canvas'); c1.appendChild(pv); c2.appendChild(gv); wrap.append(c1, c2); box.appendChild(wrap);
+  const ctr = el('div', { class: 'controls' }, `<label for="eqH">התגובה הישירה <select id="eqH"><option value="exo">אקסותרמית</option><option value="endo">אנדותרמית</option></select></label>
+  <button class="btn ghost" data-a="addA">הוספת מגיב A</button><button class="btn ghost" data-a="addB">הוספת תוצר B</button><button class="btn ghost" data-a="heat">חימום</button><button class="btn ghost" data-a="cool">קירור</button><button class="btn ghost" data-a="cat">זרז</button><button class="btn" data-a="reset">התחלה מחדש</button>`);
+  box.appendChild(ctr);
+  const ro = el('div', { class: 'readout', 'aria-live': 'polite' }); box.appendChild(ro);
+  const cap = el('p', { class: 'caption' }, 'בהתחלה יש רק מגיב A (כחול). חלקיקים הופכים ל-B (כתום) ובחזרה. שימו לב: גם אחרי שהגרף מתיישר, ההבזקים ממשיכים. זה שיווי משקל דינמי. אחר כך נסו להפריע למערכת.'); box.appendChild(cap);
+  let ps = [], hist = [], kf, kr, T, cat, W1, H1, W2, H2, tick = 0, flashes = [], msg = '';
+  const N0 = 80;
+  const reset = () => { kf = 0.012; kr = 0.006; T = 0; cat = 1; ps = Array.from({ length: N0 }, () => mk(0)); hist = []; tick = 0; msg = ''; };
+  const mk = s => { const a = Math.random() * 6.283, v = 0.6 + Math.random() * 0.8; return { x: 8 + Math.random() * ((W1 || 200) - 16), y: 8 + Math.random() * ((H1 || 200) - 16), vx: v * Math.cos(a), vy: v * Math.sin(a), s }; };
+  ctr.addEventListener('click', e => {
+    const a = e.target.dataset.a; if (!a) return; const exo = $('#eqH', box).value === 'exo';
+    if (a === 'reset') reset();
+    if (a === 'addA') { for (let i = 0; i < 30; i++) ps.push(mk(0)); msg = 'הוספתם מגיב: Q קטן מ-K, ולכן התגובה הישירה גוברת עד שיווי משקל חדש. K לא השתנה.'; }
+    if (a === 'addB') { for (let i = 0; i < 30; i++) ps.push(mk(1)); msg = 'הוספתם תוצר: Q גדול מ-K, ולכן התגובה ההפוכה גוברת. K לא השתנה.'; }
+    if (a === 'heat' && T < 2) { T++; if (exo) { kf *= 1.3; kr *= 2.2; } else { kf *= 2.2; kr *= 1.3; } msg = exo ? 'חימום: גוברת התגובה האנדותרמית, כאן ההפוכה. K קטן, ויש פחות B בשיווי המשקל החדש.' : 'חימום: גוברת התגובה האנדותרמית, כאן הישירה. K גדל, ויש יותר B.'; }
+    if (a === 'cool' && T > -2) { T--; if (exo) { kf /= 1.3; kr /= 2.2; } else { kf /= 2.2; kr /= 1.3; } msg = exo ? 'קירור: גוברת התגובה האקסותרמית, כאן הישירה. K גדל.' : 'קירור: גוברת התגובה האקסותרמית, כאן ההפוכה. K קטן.'; }
+    if (a === 'cat' && cat === 1) { cat = 2.5; msg = 'זרז: שני הקצבים גדלים באותה מידה. ההבזקים תכופים יותר, אבל היחס בין A ל-B לא משתנה.'; }
+    if (ps.length > 220) ps = ps.slice(ps.length - 220);
+  });
+  $('#eqH', box).addEventListener('change', reset);
+  const L = loop(() => {
+    const c = colors(); tick++;
+    let ctx = pv.getContext('2d'); ctx.clearRect(0, 0, W1, H1);
+    for (const p of ps) {
+      p.x += p.vx; p.y += p.vy; if (p.x < 6 || p.x > W1 - 6) p.vx *= -1; if (p.y < 6 || p.y > H1 - 6) p.vy *= -1; p.x = Math.min(Math.max(p.x, 6), W1 - 6); p.y = Math.min(Math.max(p.y, 6), H1 - 6);
+      const pr = p.s === 0 ? kf * cat : kr * cat;
+      if (Math.random() < pr) { p.s = 1 - p.s; flashes.push({ x: p.x, y: p.y, t: 0, s: p.s }); }
+      ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, 6.283); ctx.fillStyle = p.s ? c.heat : c.cold; ctx.fill();
+    }
+    flashes = flashes.filter(f => f.t < 1); flashes.forEach(f => { f.t += .08; ctx.beginPath(); ctx.arc(f.x, f.y, 6 + f.t * 12, 0, 6.283); ctx.strokeStyle = c.ink; ctx.globalAlpha = (1 - f.t) * .6; ctx.lineWidth = 1.5; ctx.stroke(); ctx.globalAlpha = 1; });
+    const nA = ps.filter(p => !p.s).length, nB = ps.length - nA;
+    if (tick % 4 === 0) { hist.push([nA, nB]); if (hist.length > 300) hist.shift(); }
+    ctx = gv.getContext('2d'); ctx.clearRect(0, 0, W2, H2);
+    const Lx = 34, R = W2 - 10, Tp = 10, B = H2 - 22; const mx = Math.max(100, ...hist.map(h => Math.max(h[0], h[1])));
+    arrow(ctx, Lx, B, Lx, Tp - 2, c.muted, 1.5); arrow(ctx, Lx, B, R + 4, B, c.muted, 1.5);
+    txt(ctx, 'זמן', (Lx + R) / 2, H2 - 7, c.muted, 11);
+    ctx.save(); ctx.translate(11, (Tp + B) / 2); ctx.rotate(-Math.PI / 2); txt(ctx, 'מספר חלקיקים', 0, 0, c.muted, 11); ctx.restore();
+    [[0, c.cold, 'A'], [1, c.heat, 'B']].forEach(([k, col, lb]) => { ctx.beginPath(); hist.forEach((h, i) => { const x = Lx + i / 300 * (R - Lx), y = B - h[k] / mx * (B - Tp); i ? ctx.lineTo(x, y) : ctx.moveTo(x, y); }); ctx.strokeStyle = col; ctx.lineWidth = 2.5; ctx.stroke(); if (hist.length) { const h = hist[hist.length - 1]; txt(ctx, lb, Lx + (hist.length - 1) / 300 * (R - Lx) + 9, B - h[k] / mx * (B - Tp), col, 12, 'center', true); } });
+    const K = kf / kr, Q = nA ? nB / nA : Infinity; const rec = hist.slice(-30), mA = rec.reduce((t, h) => t + h[0], 0) / (rec.length || 1), mB = rec.reduce((t, h) => t + h[1], 0) / (rec.length || 1), Qs = mA ? mB / mA : Infinity;
+    const stable = rec.length >= 30 && Math.abs(Qs - K) / K < 0.15;
+    ro.innerHTML = `<span>[A] ∝ <b>${nA}</b></span><span>[B] ∝ <b>${nB}</b></span><span>Q = [B]/[A] = <b>${isFinite(Q) ? Q.toFixed(2) : '∞'}</b></span><span>K = <b>${K.toFixed(2)}</b></span><span><b>${stable ? 'בשיווי משקל: Q ≈ K (תנודות קטנות הן טבעיות)' : Qs < K ? 'Q &lt; K: הישירה גוברת' : 'Q &gt; K: ההפוכה גוברת'}</b></span>`;
+    if (msg) cap.textContent = msg;
+  });
+  return { start() { let r = fitCanvas(pv, .9); W1 = r.w; H1 = r.h; r = fitCanvas(gv, .56); W2 = r.w; H2 = r.h; if (H1 > H2 * 1.1) { r = fitCanvas(pv, H2 / W1); W1 = r.w; H1 = r.h; } reset(); L.start(); }, stop() { L.stop(); } };
+};
+
+/* ================= widget: Kc and Q calculator (H2 + Br2 ⇌ 2HBr) ================= */
+W.kcalc = box => {
+  head(box, 'מחשבון', 'טבלת ריכוזים, Kc ו-Q', true);
+  box.insertAdjacentHTML('beforeend', `<div class="eq">H<sub>2</sub>(g) + Br<sub>2</sub>(g) ⇌ 2HBr(g) &nbsp; (כלי של 1 ליטר)</div>
+  <p><b>שלב א:</b> הזינו ריכוזים התחלתיים ואת [HBr] בשיווי משקל.</p>
+  <div class="controls"><label for="k0h">[H₂]₀ <input id="k0h" type="number" min="0" step="0.1" value="1"></label><label for="k0b">[Br₂]₀ <input id="k0b" type="number" min="0" step="0.1" value="1"></label><label for="k0x">[HBr]₀ <input id="k0x" type="number" min="0" step="0.1" value="1"></label><label for="keq">[HBr] בשיווי משקל <input id="keq" type="number" min="0" step="0.1" value="1.8"></label></div>
+  <div id="kout"></div>
+  <p><b>שלב ב:</b> ריכוזים ברגע כלשהו. האם המערכת בשיווי משקל, ולאן תתקדם?</p>
+  <div class="controls"><label for="qh">[H₂] <input id="qh" type="number" min="0" step="0.1" value="0.5"></label><label for="qb">[Br₂] <input id="qb" type="number" min="0" step="0.1" value="0.5"></label><label for="qx">[HBr] <input id="qx" type="number" min="0" step="0.1" value="2"></label></div>
+  <div class="caption" id="qout2"></div>`);
+  let K = null;
+  const n = id => parseFloat($(id, box).value);
+  const upd = () => {
+    const h0 = n('#k0h'), b0 = n('#k0b'), x0 = n('#k0x'), xe = n('#keq');
+    let html = '';
+    if ([h0, b0, x0, xe].some(v => isNaN(v) || v < 0)) { html = '<div class="verdict no">מלאו מספרים לא שליליים.</div>'; K = null; }
+    else {
+      const dx = xe - x0, d = dx / 2, he = h0 - d, be = b0 - d;
+      if (he <= 0 || be <= 0) { html = `<div class="verdict no">לא ייתכן: לפי יחס המולים, [H₂] ו-[Br₂] בשיווי משקל יוצאים ${he.toFixed(2)} ו-${be.toFixed(2)}. ריכוז חייב להיות חיובי.</div>`; K = null; }
+      else { K = xe * xe / (he * be); const f = v => (v > 0 ? '+' : '') + (+v.toFixed(3));
+        html = `<div class="tblwrap"><table><thead><tr><th></th><th class="num">H₂</th><th class="num">Br₂</th><th class="num">HBr</th></tr></thead><tbody>
+        <tr><td>התחלתי (M)</td><td class="num">${h0}</td><td class="num">${b0}</td><td class="num">${x0}</td></tr>
+        <tr><td>שינוי (M)</td><td class="num">${f(-d)}</td><td class="num">${f(-d)}</td><td class="num">${f(dx)}</td></tr>
+        <tr><td>שיווי משקל (M)</td><td class="num">${+he.toFixed(3)}</td><td class="num">${+be.toFixed(3)}</td><td class="num">${xe}</td></tr></tbody></table></div>
+        <p class="caption">Kc = [HBr]² / ([H₂]·[Br₂]) = ${xe}² / (${+he.toFixed(3)} × ${+be.toFixed(3)}) = <b>${+K.toFixed(3)}</b>${dx < 0 ? '. כאן HBr ירד: התגובה ההפוכה היא שהתקדמה.' : ''}</p>`; }
+    }
+    $('#kout', box).innerHTML = html;
+    const qh = n('#qh'), qb = n('#qb'), qx = n('#qx'); const out = $('#qout2', box);
+    if (K === null) { out.textContent = 'קודם צריך Kc תקין בשלב א.'; return; }
+    if ([qh, qb, qx].some(v => isNaN(v) || v < 0) || qh * qb === 0) { out.textContent = 'הזינו ריכוזים חיוביים של H₂ ו-Br₂.'; return; }
+    const Q = qx * qx / (qh * qb), rel = Math.abs(Q - K) / K;
+    out.innerHTML = `Q = ${qx}² / (${qh} × ${qb}) = <b>${+Q.toFixed(3)}</b>, ו-Kc = <b>${+K.toFixed(3)}</b>. ` + (rel < 0.02 ? 'Q = Kc: המערכת <b>בשיווי משקל</b>.' : Q < K ? 'Q &lt; Kc: <b>התגובה הישירה</b> תגבר, ייווצר עוד HBr.' : 'Q &gt; Kc: <b>התגובה ההפוכה</b> תגבר, HBr יתפרק.');
+  };
+  box.addEventListener('input', upd); upd(); return {};
+};
+
+/* ================= flashcards + mind map for equilibrium ================= */
+DECK.push(
+{c:'equilibrium',q:'מהי תגובה הפיכה?',a:'תגובה שיכולה להתרחש בשני הכיוונים: מהמגיבים לתוצרים (ישירה) ומהתוצרים למגיבים (הפוכה). מסמנים אותה בחץ כפול ⇌.'},
+{c:'equilibrium',q:'מהו שיווי משקל כימי דינמי?',a:'מצב שבו קצב התגובה הישירה שווה לקצב התגובה ההפוכה. הריכוזים קבועים, אבל שתי התגובות ממשיכות להתרחש.'},
+{c:'equilibrium',q:'האם במצב שיווי משקל ריכוזי המגיבים והתוצרים שווים?',a:'לא בהכרח. הם <b>קבועים</b>, לא שווים.'},
+{c:'equilibrium',q:'איך כותבים את Kc לתגובה aA + bB ⇌ cC + dD?',a:'<span class="f">Kc = [C]^c·[D]^d / ([A]^a·[B]^b)</span><br>ריכוזים בשיווי משקל, כל אחד בחזקת המקדם שלו.'},
+{c:'equilibrium',q:'במה תלוי ערכו של Kc?',a:'רק בטמפרטורה. שינוי ריכוזים או הוספת זרז לא משנים אותו.'},
+{c:'equilibrium',q:'מה ההבדל בין מנת הריכוזים Q לבין Kc?',a:'Q מחושב עם הריכוזים ברגע כלשהו. Kc מחושב רק עם הריכוזים בשיווי משקל.'},
+{c:'equilibrium',q:'מה קורה כאשר Q < Kc? וכאשר Q > Kc?',a:'Q < Kc: התגובה הישירה גוברת.<br>Q > Kc: התגובה ההפוכה גוברת.'},
+{c:'equilibrium',q:'מה קובע עקרון לה שטלייה?',a:'כשמפריעים למערכת בשיווי משקל, גוברת התגובה שמקטינה את ההפרעה, עד לשיווי משקל חדש.'},
+{c:'equilibrium',q:'מה עושה חימום למערכת בשיווי משקל?',a:'גוברת התגובה האנדותרמית, ו-Kc משתנה: גדל אם הישירה אנדותרמית, קטן אם היא אקסותרמית.'},
+{c:'equilibrium',q:'מה עושה זרז שמוסיפים למערכת בשיווי משקל?',a:'מגדיל את שני הקצבים באותה מידה. הרכב המערכת ו-Kc לא משתנים.'},
+{c:'equilibrium',q:'Kc גדול מאוד (למשל 10¹²). מה המשמעות?',a:'במצב שיווי משקל יש כמעט רק תוצרים. מעשית, התגובה מתרחשת עד תום.'}
+);
+MAP.k.splice(MAP.k.findIndex(n => n.go === 'entropy'), 0, {t:'שיווי משקל כימי', go:'equilibrium', k:[{t:'תגובה הפיכה ⇌, כלי סגור'},{t:'קצב ישיר = קצב הפוך'},{t:'ריכוזים קבועים, לא שווים'},{t:'הקבוע Kc תלוי רק בטמפרטורה'},{t:'השוואת Q ל-Kc: לאן תתקדם התגובה'},{t:'לה שטלייה', k:[{t:'ריכוז: K לא משתנה'},{t:'טמפרטורה: K משתנה'},{t:'זרז: הרכב לא משתנה'}]}]});
 /* ================= state ================= */
 const KEY = 'energy-chem-v1';
 let S = { name: '', startMood: null, ch: {} };
@@ -1142,8 +1340,8 @@ const hi = () => S.name ? S.name + ', ' : '';
 /* ================= nav ================= */
 const nav = $('#nav'), view = $('#view');
 let active = [];
-const NAVLBL = ['אנרגיה', 'מערכת', 'אנתלפיה', 'מצבי צבירה', 'חוק הס', 'קשרים', 'קצב', 'אנטרופיה'];
-const PROF = [0.70, 0.62, 0.50, 0.58, 0.40, 0.30, 0.12, 0.66];
+const NAVLBL = ['אנרגיה', 'מערכת', 'אנתלפיה', 'מצבי צבירה', 'חוק הס', 'קשרים', 'קצב', 'שיווי משקל', 'אנטרופיה'];
+const PROF = [0.70, 0.62, 0.50, 0.58, 0.40, 0.30, 0.12, 0.44, 0.66];
 function buildNav() {
   const tr = $('#track'); tr.innerHTML = '';
   const pts = CHAPTERS.map((c, i) => ({ x: 96 - i * (92 / (CHAPTERS.length - 1)), y: 14 + PROF[i] * 52 }));
@@ -1152,7 +1350,7 @@ function buildNav() {
   for (let i = 0; i < P.length - 1; i++) { const p0 = P[i - 1] || P[i], p1 = P[i], p2 = P[i + 1], p3 = P[i + 2] || p2; d += ` C ${p1[0] + (p2[0] - p0[0]) / 6} ${p1[1] + (p2[1] - p0[1]) / 6}, ${p2[0] - (p3[0] - p1[0]) / 6} ${p2[1] - (p3[1] - p1[1]) / 6}, ${p2[0]} ${p2[1]}`; }
   tr.innerHTML = `<svg viewBox="0 0 1000 86" preserveAspectRatio="none" aria-hidden="true"><defs><linearGradient id="tg" x1="1" x2="0" y1="0" y2="0"><stop offset="0" style="stop-color:var(--t1)"/><stop offset=".4" style="stop-color:var(--t2)"/><stop offset=".75" style="stop-color:var(--t3)"/><stop offset="1" style="stop-color:var(--t4)"/></linearGradient></defs>
   <path d="${d}" fill="none" stroke="url(#tg)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>`;
-  CHAPTERS.forEach((c, i) => { const d = S.ch[c.id]; const done = d && d.best != null; const b = el('button', { class: 'navbtn st' + (done ? ' done' : '') + (done && d.best === 10 ? ' ace' : '') + (PROF[i] > .6 ? ' up' : ''), 'data-go': c.id, style: `left:${pts[i].x}%;top:${pts[i].y}px`, title: c.title, type: 'button' });
+  CHAPTERS.forEach((c, i) => { const d = S.ch[c.id]; const done = d && d.best != null; const b = el('button', { class: 'navbtn st' + (done ? ' done' : '') + (done && d.best === 10 ? ' ace' : '') + (PROF[i] > .6 ? ' up' : '') + (c.alt ? ' alt' : ''), 'data-go': c.id, style: `left:${pts[i].x}%;top:${pts[i].y}px`, title: c.title + (c.alt ? ' · הערכה חלופית' : ''), type: 'button' });
     b.innerHTML = `<span class="dotc">${done ? d.best : i + 1}</span><span class="lbl">${NAVLBL[i]}</span>`; tr.appendChild(b); });
   const tools = $('#tools'); tools.querySelectorAll('.pill').forEach(b => b.remove());
   [['map', 'מפת חשיבה'], ['cards', 'כרטיסיות'], ['report', 'הדוח שלי']].reverse().forEach(([id, t]) => { const b = el('button', { class: 'navbtn pill', 'data-go': id, type: 'button' }, t); tools.prepend(b); });
@@ -1177,7 +1375,7 @@ function renderHome() {
   v.innerHTML = `<section class="hero"><canvas id="heroCv" aria-hidden="true"></canvas><div class="herotext">
   <p class="eyebrow">כימיה 5 יח"ל · אנרגיה ודינמיקה · תשפ"ז</p>
   <h1 class="burn">אנרגיה בקצב הכימיה</h1>
-  <p class="lead">מסע של 8 תחנות לאורך עקומת האנרגיה: מהתנועה של חלקיק בודד, דרך ΔH וחוק הס, ועד השאלה למה תגובות קורות בכלל.</p>
+  <p class="lead">מסע של ${CHAPTERS.length} תחנות לאורך עקומת האנרגיה: מהתנועה של חלקיק בודד, דרך ΔH וחוק הס, ועד השאלה למה תגובות קורות בכלל.</p>
   <div class="cta"><button class="btn heat" data-go="${nextC.id}">${doneN ? 'ממשיכים לתחנה ' + (CHAPTERS.indexOf(nextC) + 1) : 'יוצאים לדרך: תחנה 1'}</button><button class="btn ghost" data-go="map">מפת חשיבה</button></div></div></section>
   <section class="panel"><h2>לפני שמתחילים</h2>
   <label for="sname" style="font-weight:700">איך קוראים לכם? <input id="sname" type="text" autocomplete="given-name" value="${(S.name || '').replace(/"/g, '&quot;')}" placeholder="שם פרטי"></label>${NOTIFY_URL ? '<p style="font-size:.88rem;color:var(--muted)">שימו לב: אחרי שמזינים שם, המורה מקבל הודעה על הכניסה שלכם, על תוצאות הבחנים ועל המשוב שאתם שולחים.</p>' : ''}
@@ -1193,7 +1391,7 @@ function renderHome() {
   <section class="blk"><h2>התחנות</h2><p class="lead">השלמתם ${doneN} מתוך ${CHAPTERS.length} תחנות.</p><div class="homegrid" id="hg"></div></section>`;
   view.appendChild(v);
   const hg = $('#hg', v);
-  CHAPTERS.forEach((c, i) => { const b = el('button', { class: 'homecard', 'data-go': c.id }); const r = S.ch[c.id] && S.ch[c.id].best != null ? ` · בוחן: ${S.ch[c.id].best}/10` : ''; const best = S.ch[c.id] && S.ch[c.id].best != null ? S.ch[c.id].best : 0; b.innerHTML = `<span class="n">${String(i + 1).padStart(2, '0')}</span><b>${c.title}</b><small>${c.short}${r}</small><span class="meter" aria-hidden="true"><i style="width:${best * 10}%"></i></span>`; hg.appendChild(b); });
+  CHAPTERS.forEach((c, i) => { const b = el('button', { class: 'homecard', 'data-go': c.id }); const r = S.ch[c.id] && S.ch[c.id].best != null ? ` · בוחן: ${S.ch[c.id].best}/10` : ''; const best = S.ch[c.id] && S.ch[c.id].best != null ? S.ch[c.id].best : 0; b.innerHTML = `<span class="n">${String(i + 1).padStart(2, '0')}</span><b>${c.title}</b><small>${c.alt ? 'הערכה חלופית · ' : ''}${c.short}${r}</small><span class="meter" aria-hidden="true"><i style="width:${best * 10}%"></i></span>`; hg.appendChild(b); });
   const hc = $('#heroCv', v); if (hc) { const h = HERO(hc); active.push(h); requestAnimationFrame(() => h.start()); }
   $('#sname', v).addEventListener('input', e => { S.name = e.target.value.trim(); save(); clearTimeout(nameTimer); nameTimer = setTimeout(notifyEntry, 2500); });
   moodPicker($('#smood', v), S.startMood, m => { S.startMood = m; save(); $('#smreply', v).innerHTML = teacher(m <= 1 ? `${hi()}תודה על הכנות. אנרגיה נשמעת לפעמים מופשטת, ולכן בניתי כאן הרבה הדמיות. נתקדם צעד אחר צעד, ואפשר לחזור על כל פרק כמה שרוצים.` : m === 2 ? `${hi()}נשמע הוגן. בואו נתחיל מהבסיס ונראה איך זה מתפתח.` : `${hi()}איזה כיף לשמוע! האנרגיה הזאת בדיוק מה שצריך. בואו נתחיל.`); });
@@ -1208,7 +1406,7 @@ function renderChapter(c) {
   const idx = CHAPTERS.indexOf(c);
   const v = el('div', { class: 'view' });
   const dd = S.ch[c.id];
-  v.innerHTML = `<header class="chhead"><span class="stno" aria-hidden="true">${String(idx + 1).padStart(2, '0')}</span><p class="eyebrow">תחנה ${idx + 1} מתוך ${CHAPTERS.length}</p><div><h1>${c.title}</h1><div class="chmeta"><span class="tagp">${c.short}</span>${dd && dd.best != null ? `<span class="tagp ${dd.best >= 8 ? 'ok' : ''}">בוחן: ${dd.best}/10</span>` : '<span class="tagp">בוחן: עוד לא</span>'}</div></div></header>${c.html}${DECK.some(d => d.c === c.id) ? `<div class="cardlink"><div><b>חזרה מהירה בכרטיסיות</b><br><span>${DECK.filter(d => d.c === c.id && !d.x).length} כרטיסים לפרק הזה. מומלץ לפני הבוחן.</span></div><button class="btn ghost" data-cards="${c.id}">לכרטיסיות של הפרק</button></div>` : ''}<div id="qhost"></div>
+  v.innerHTML = `<header class="chhead"><span class="stno" aria-hidden="true">${String(idx + 1).padStart(2, '0')}</span><p class="eyebrow">תחנה ${idx + 1} מתוך ${CHAPTERS.length}</p><div><h1>${c.title}</h1><div class="chmeta">${c.alt ? '<span class="tagp alt">הערכה חלופית</span>' : ''}<span class="tagp">${c.short}</span>${dd && dd.best != null ? `<span class="tagp ${dd.best >= 8 ? 'ok' : ''}">בוחן: ${dd.best}/10</span>` : '<span class="tagp">בוחן: עוד לא</span>'}</div></div></header>${c.html}${DECK.some(d => d.c === c.id) ? `<div class="cardlink"><div><b>חזרה מהירה בכרטיסיות</b><br><span>${DECK.filter(d => d.c === c.id && !d.x).length} כרטיסים לפרק הזה. מומלץ לפני הבוחן.</span></div><button class="btn ghost" data-cards="${c.id}">לכרטיסיות של הפרק</button></div>` : ''}<div id="qhost"></div>
   <div class="navfoot">${idx > 0 ? `<button class="btn ghost" data-go="${CHAPTERS[idx - 1].id}">הפרק הקודם</button>` : '<span></span>'}${idx < CHAPTERS.length - 1 ? `<button class="btn" data-go="${CHAPTERS[idx + 1].id}">הפרק הבא</button>` : '<button class="btn" data-go="report">לדוח שלי</button>'}</div>`;
   view.appendChild(v);
   v.querySelectorAll('.widget').forEach(w => { const f = W[w.dataset.w]; if (f) { const api = f(w) || {}; active.push(api); } });
