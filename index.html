@@ -197,6 +197,8 @@ textarea{width:100%;min-height:80px;resize:vertical}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* ===================== v3 layer ===================== */
+.credit{text-align:center;color:var(--muted);font-size:.88rem;font-weight:600;padding:0 16px calc(28px + env(safe-area-inset-bottom,0px))}
+.credit::before{content:"";display:block;width:56px;height:3px;border-radius:3px;margin:0 auto 10px;background:linear-gradient(90deg,var(--t1),var(--t2),var(--t3),var(--t4))}
 .alt-note{display:flex;flex-direction:column;gap:2px;border:2px dashed var(--t2);border-radius:14px;padding:10px 16px;background:var(--surface)}
 .alt-note b{color:var(--t2);font-size:.95rem}
 .tagp.alt{color:var(--surface);background:var(--t2);border-color:var(--t2);font-weight:700}
@@ -295,6 +297,7 @@ canvas{border-radius:12px}
   <nav class="coord" id="nav" aria-label="תחנות היחידה"><div class="track" id="track"></div></nav>
 </header>
 <div class="app"><main id="view" dir="rtl"></main></div>
+<footer class="credit">פותח ע"י נוי נוביק</footer>
 <script>
 const MEDIA_BASE = location.protocol === 'file:' ? 'https://noynovik-maker.github.io/chemistry-energy/' : '';
 const M = n => MEDIA_BASE + 'media/' + encodeURI(n);
